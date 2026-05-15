@@ -1,0 +1,25 @@
+// Code your testbench here
+// or browse Examples
+module encoder_tb ();
+  reg i0,i1,i2,i3;
+  wire [1:0] y ;
+  
+  encoder dut(i0,i1,i2,i3,y);
+  
+  initial begin
+       i0=1; i1=0;i2=0; i3=0;
+    #5 i0=0; i1=1;i2=0; i3=0;
+    #5 i0=0; i1=0;i2=1; i3=0;
+    #5 i0=0; i1=0;i2=0; i3=1;
+  end
+  initial
+    $monitor($time,"i0=%0b,i1=%0b,i2=%0b,i3=%0b ,y=%0b",i0, i1,i2,i3 ,y);
+  initial begin
+    $dumpfile("dump.vcd");
+$dumpvars(0, encoder_tb);
+  end
+    
+    
+endmodule
+  
+  
