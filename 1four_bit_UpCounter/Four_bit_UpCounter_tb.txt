@@ -1,0 +1,25 @@
+// Code your testbench here
+// or browse Examples
+
+module four_bit_UpCounter_tb ();
+  reg clk , rst ;
+  wire [3:0] count ;
+  initial clk=0;
+  always #5 clk = ~clk;
+  
+  four_bit_UpCounter dut ( clk ,rst, count);
+  
+  initial begin
+    
+    rst=1;
+    #10 rst=0 ;
+  end
+  
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0, four_bit_UpCounter_tb);
+end
+  initial begin
+    #100 $finish;
+end
+endmodule
