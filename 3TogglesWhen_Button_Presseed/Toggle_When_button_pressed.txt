@@ -1,0 +1,33 @@
+// Code your design here
+module toggles_When_button_pressed ( input clk,rst,button,
+                                    output reg out );
+  
+  
+  reg PreviousValue ; 
+  
+  always @(posedge clk)
+    begin
+      if (rst)
+        begin
+        PreviousValue<=0;
+        out <=0;       
+      end
+      else 
+        begin
+          if (PreviousValue==0 && button==1)      
+            out <= ~out;
+                
+          PreviousValue<=button;
+            end
+      
+    end
+  
+    
+    
+    
+      
+    
+       
+      
+   
+endmodule

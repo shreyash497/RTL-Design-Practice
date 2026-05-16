@@ -1,0 +1,41 @@
+// Code your testbench here
+// or browse Examples
+module tb;
+  reg clk,rst,button;
+  wire out;
+  
+  toggles_When_button_pressed dut(clk,rst,button,out);
+  
+  always #5 clk=~clk;
+  initial begin
+    clk = 0;
+    rst = 1;
+    button = 0;
+    #10 rst = 0;
+    // posedge clk edges 5,15,25,35,45,55,65,75
+    // First press
+    #10 button = 1; // 20ns
+    
+    #10 button = 0; // 30ns
+    // Second press
+    #20 button = 1; // 50ns
+    #10 button = 0; // 60ns
+    // Third press
+    #20 button = 1; // 80ns
+    #10 button = 0; // 90ns
+    #20 $finish;
+    
+   
+    
+  end
+  initial begin
+  $dumpfile("dump.vcd");
+    $dumpvars(0, tb);
+  end
+  initial 
+    $monitor($time,"rst=%0d, button=%0d,out=%0d",rst ,button,out);
+  
+    
+endmodule
+  
+  
