@@ -1,3 +1,5 @@
+Question:  Design an FSM that toggles output every time a button is pressed.
+
 // Code your design here
 module toggles_When_button_pressed ( input clk,rst,button,
                                     output reg out );
