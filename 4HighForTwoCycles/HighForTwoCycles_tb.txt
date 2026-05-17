@@ -1,0 +1,40 @@
+module tb;
+
+    reg clk, rst, x;
+    wire y;
+
+    HighForTwoCycles dut (
+        .clk(clk),
+        .rst(rst),
+        .x(x),
+        .y(y)
+    );
+
+   
+    always #5 clk = ~clk;
+  
+  always @(posedge clk) begin
+        $display("Time=%0t | rst=%b | x=%b | state=%b | y=%b",
+                  $time, rst, x, dut.state, y);
+    end
+
+    initial begin
+        clk = 0;
+        rst = 1;
+        x = 0;
+
+        #10 rst = 0;
+
+        // Apply inputs
+        #10 x = 1;
+        #10 x = 1;
+        #10 x = 0;
+        #10 x = 1;
+        #10 x = 1;
+        #10 x = 1;
+        #10 x = 0;
+
+        #20 $finish;
+    end
+
+endmodule
