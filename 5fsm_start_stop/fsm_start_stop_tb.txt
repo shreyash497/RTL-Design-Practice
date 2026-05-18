@@ -1,0 +1,44 @@
+// Code your testbench here
+// or browse Examples
+module tb;
+
+reg clk;
+reg reset;
+reg start;
+reg stop;
+
+wire out;
+
+fsm uut (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .stop(stop),
+    .out(out)
+);
+
+always #5 clk = ~clk;
+
+initial
+begin
+  $dumpfile("dump.vcd");
+    $dumpvars(0, tb);
+    $monitor("time=%0t reset=%b start=%b stop=%b out=%b",
+              $time, reset, start, stop, out);
+    clk = 0;
+    reset = 1;
+    start = 0;
+    stop = 0;
+
+    #10 reset = 0;
+
+    #10 start = 1;
+    #10 start = 0;
+
+    #20 stop = 1;
+    #10 stop = 0;
+
+    #20 $finish;
+end
+
+endmodule
