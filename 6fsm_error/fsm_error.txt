@@ -1,0 +1,57 @@
+// Code your design here
+q. 4.	Design an FSM that detects an ERROR condition when two inputs are HIGH simultaneously. 
+
+module error_fsm(
+    input clk,
+    input reset,
+    input a,
+    input b,
+    output reg error
+);
+
+reg state;
+
+parameter NORMAL = 1'b0,
+          ERROR  = 1'b1;
+
+always @(posedge clk or posedge reset)
+begin
+    if(reset)
+        state <= NORMAL;
+
+    else begin
+        case(state)
+
+            NORMAL:
+            begin
+                if(a && b)
+                    state <= ERROR;
+                else
+                    state <= NORMAL;
+            end
+
+            ERROR:
+            begin
+                if(!(a && b))
+                    state <= NORMAL;
+                else
+                    state <= ERROR;
+            end
+
+        endcase
+    end
+end
+
+always @(*)
+begin
+    case(state)
+
+        NORMAL: error = 0;
+        ERROR : error = 1;
+
+        default: error = 0;
+
+    endcase
+end
+
+endmodule

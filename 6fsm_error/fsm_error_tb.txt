@@ -1,0 +1,46 @@
+// Code your testbench here
+// or browse Examples
+module tb;
+
+reg clk;
+reg reset;
+reg a;
+reg b;
+
+wire error;
+
+error_fsm dut(
+    .clk(clk),
+    .reset(reset),
+    .a(a),
+    .b(b),
+    .error(error)
+);
+
+always #5 clk = ~clk;
+
+initial
+begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,tb);
+
+    clk = 0;
+    reset = 1;
+    a = 0;
+    b = 0;
+
+    #10 reset = 0;
+
+    // Normal state
+    #10 a = 1; b = 0;
+
+    // ERROR condition
+    #10 a = 1; b = 1;
+
+    // Back to normal
+    #10 a = 0; b = 1;
+
+    #20 $finish;
+end
+
+endmodule
