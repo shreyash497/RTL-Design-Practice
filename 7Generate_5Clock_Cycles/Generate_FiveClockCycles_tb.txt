@@ -1,0 +1,53 @@
+// Code your testbench here
+// or browse Examples
+`timescale 1ns / 1ps
+
+module tb_pulse_fsm;
+
+reg clk;
+reg rst;
+wire pulse;
+
+pulse_fsm uut (
+    .clk(clk),
+    .rst(rst),
+    .pulse(pulse)
+);
+
+// Clock Generation
+always #5 clk = ~clk;
+
+
+// Test Procedure
+initial
+begin
+    clk = 0;
+    rst = 1;
+
+    // Apply Reset
+    #10;
+    rst = 0;
+
+    // Run Simulation
+    #100;
+
+    $finish;
+end
+
+
+// Dumpfile for Waveform
+initial
+begin
+    $dumpfile("pulse_fsm.vcd");
+    $dumpvars(0, tb_pulse_fsm);
+end
+
+
+// Monitor Signals
+initial
+begin
+    $monitor("Time=%0t clk=%b rst=%b pulse=%b",
+              $time, clk, rst, pulse);
+end
+
+endmodule
